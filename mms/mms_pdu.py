@@ -10,9 +10,11 @@
 """ MMS Data Unit structure encoding and decoding classes 
 Original by Francois Aucamp
 Modified by Nick Leppänen Larsson for use in Maemo5/Fremantle on the Nokia N900.
+Modified (dirty hack) BY peter Leinchen for solving the non-receiving of MMS
 
 @author: Francois Aucamp <faucamp@csir.co.za>
 @author: Nick LeppÃ¤nen Larsson <frals@frals.se>
+@author: Peter Leinchen <peterleinchen@t-online.de>
 @license: GNU LGPL
 """
 
@@ -46,6 +48,7 @@ class MMSEncodingAssignments:
                   0x16 : ('Subject', 'EncodedStringValue'),
                   0x17 : ('To', 'EncodedStringValue'),
                   0x18 : ('Transaction-Id', 'TextString'),
+                  0x19 : ('Retrieve-Status', 'ShortInteger'), #peterleinchen
                   0x40 : ('Content-ID', 'TextString')}
 
 
