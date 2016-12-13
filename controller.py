@@ -283,7 +283,10 @@ class fMMS_controller():
 		p = PushHandler()
 		path = p._get_mms_message(url, trans_id, self)
 		log.info("path: %s", path)
+		print trans_id
+		os.system("if [ ! -f /home/user/.fmms/mms/" + trans_id + "/message.bak ]; then cp /home/user/.fmms/mms/" + trans_id + "/message /home/user/.fmms/mms/" + trans_id + "/message.bak; fi")
 		message = self.decode_binary_mms(path)
+		os.system("if [ -f /home/user/.fmms/mms/" + trans_id + "/message.bak ]; then diff /home/user/.fmms/mms/" + trans_id + "/message /home/user/.fmms/mms/" + trans_id + "/message.bak; if [ \"$?\" == \"0\" ]; then rm /home/user/.fmms/mms/" + trans_id + "/message.bak; fi; fi")
 		log.info("storing mms...%s", trans_id)
 		mmsid = self.store_mms_message(pushid, message)
 		
