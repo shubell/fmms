@@ -76,6 +76,21 @@ class fMMS_ConfigDialog():
 		self.icdbutton = hildon.GtkToggleButton(gtk.HILDON_SIZE_FINGER_HEIGHT)
 		self.icdbutton.set_label(_("Polite"))
 		self.icdsignal = self.icdbutton.connect('toggled', self.conn_mode_toggled)
+
+		expRBox = gtk.HBox()
+		exp_label2 = gtk.Label("Roaming Mode")
+		exp_label2.set_width_chars(labelwidth)
+		exp_label2.set_line_wrap(True)
+		exp_label2.set_alignment(0, 0.5)
+		
+		rbox = gtk.HButtonBox()
+		rbox.set_property("name", "GtkHBox2")
+		self.promptbutton = hildon.GtkToggleButton(gtk.HILDON_SIZE_FINGER_HEIGHT)
+		self.promptbutton.set_label(_("Prompt"))
+		self.promptsignal = self.promptbutton.connect('toggled', self.roam_mode_toggled)
+		self.ignorebutton = hildon.GtkToggleButton(gtk.HILDON_SIZE_FINGER_HEIGHT)
+		self.ignorebutton.set_label(_("Ignore"))
+		self.ignoresignal = self.ignorebutton.connect('toggled', self.roam_mode_toggled)
 		
 		# Set the correct button to be active
 		self.connmode_setactive()
@@ -90,9 +105,22 @@ class fMMS_ConfigDialog():
 		expHBox.pack_start(exp_label, False, True, 0)
 		expHBox.pack_start(alignment, False, True, 0)
 
+		# Set the correct button to be active
+		self.roammode_setactive()
+
+		rbox.pack_start(self.promptbutton, True, False, 0)
+		rbox.pack_start(self.ignorebutton, True, False, 0)
+
+		alignment = gtk.Alignment(0.5, 0.5, 0, 0)
+		alignment.add(rbox)
+
+		expRBox.pack_start(exp_label2, False, True, 0)
+		expRBox.pack_start(alignment, False, True, 0)
+
 		allVBox.pack_start(apnHBox, False, False, 2)
 		#allVBox.pack_start(numberHBox, False, False, 2)
 		allVBox.pack_start(imgwidthHBox, False, False, 2)
+		allVBox.pack_end(expRBox, False, False, 2)
 		allVBox.pack_end(expHBox, False, False, 2)
 
 		allVBox.show_all()
@@ -163,6 +191,34 @@ class fMMS_ConfigDialog():
 		elif self.config.get_connmode() == fMMSconf.CONNMODE_FORCESWITCH:
 			self.rudebutton.set_active(True)
 
+	def roam_mode_toggled(self, widget):
+		""" Ugly hack used since its ToggleButtons """
+		self.promptbutton.handler_block(self.promptsignal)
+		self.ignorebutton.handler_block(self.ignoresignal)
+		if self.promptbutton == widget:
+			self.promptbutton.set_active(True)
+			self.ignorebutton.set_active(False)
+		elif self.rudebutton == widget:
+			self.promptcbutton.set_active(False)
+			self.ignorebutton.set_active(True)
+		self.promptbutton.handler_unblock(self.promptsignal)
+		self.ignorebutton.handler_unblock(self.ignoresignal)
+		return True
+
+	def roammode_option(self):
+		""" Returns which 'Roaming Mode' button is active. """
+		if self.promptbutton.get_active():
+			return fMMSconf.ROAMMODE_PROMPT
+		elif self.ignorebutton.get_active():
+			return fMMSconf.ROAMMODE_IGNORE
+
+	def roammode_setactive(self):
+		""" Activate one of the 'Roaming Mode' buttons. """
+		if self.config.get_roammode() == fMMSconf.ROAMMODE_PROMPT:
+			self.promptbutton.set_active(True)
+		elif self.config.get_connmode() == fMMSconf.ROAMMODE_IGNORE:
+			self.ignorebutton.set_active(True)
+
 	def config_menu_button_clicked(self, action):
 		""" Checks if we should save the Configuration options. """
 		if action == 1:
@@ -175,7 +231,9 @@ class fMMS_ConfigDialog():
 			self.config.set_img_resize_width(size)
 			log.info("Set image width to %s" % size)
 			self.config.set_connmode(self.connmode_option())
-			log.info("Set connection mode %s" % self.connmode_option())				
+			log.info("Set connection mode %s" % self.connmode_option())	
+			self.config.set_roammode(self.roammode_option())
+			log.info("Set roaming mode %s" % self.roammode_option())				
 			banner = hildon.hildon_banner_show_information(self.window, "", \
 				 gettext.ldgettext('osso-connectivity-ui', "conn_ib_settings_saved"))
 			return 0

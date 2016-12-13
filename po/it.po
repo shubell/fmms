@@ -1,0 +1,105 @@
+# UI translation for fMMS
+# Copyright (C) 2010 Nick Leppänen Larsson <frals@frals.se>
+# This file is distributed under the same license as the fMMS package.
+# Nick Leppänen Larsson <frals@frals.se>, 2010.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: fMMS\n"
+"Report-Msgid-Bugs-To: http://bugs.maemo.org/enter_bug.cgi?product=fMMS\n"
+"POT-Creation-Date: 2010-11-08 22:02+0200\n"
+"PO-Revision-Date: 2010-11-22 10:15+0200\n"
+"Last-Translator: Giancarlo Rosso <rosso.giancarlo@ovi.com>\n"
+"Language-Team: Italian <>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: fmms_sender_ui.py:234
+#, python-format
+msgid "Attachment is too large (limit is %s)."
+msgstr "L'allegato è troppo grande (il limite è %s)."
+
+#: fmms_config_dialog.py:52
+msgid "Small"
+msgstr "Piccola"
+
+#: fmms_config_dialog.py:52
+msgid "Medium"
+msgstr "Media"
+
+#: fmms_config_dialog.py:52
+msgid "Large"
+msgstr "Grande"
+
+#: fmms_config_dialog.py:52
+msgid "Original"
+msgstr "Originale"
+
+#: fmms_config_dialog.py:71
+msgid "Havoc"
+msgstr "Havoc"
+
+#: fmms_config_dialog.py:74
+msgid "Rude"
+msgstr "Rude"
+
+#: fmms_config_dialog.py:77
+msgid "Polite"
+msgstr "Polite"
+
+# Menu choice to reset fmms settings to null
+#: controller_gtk.py:34 controller_gtk.py:88
+msgid "Reset settings"
+msgstr "Ripristina impostazioni"
+
+# Shown when user confirms reseting application settings
+#: controller_gtk.py:91
+msgid "Are you sure you want to reset all settings?"
+msgstr "Sei sicuro di voler ripristinare le impostazioni?"
+
+#: controller_gtk.py:99
+msgid "Application will close after settings are removed"
+msgstr "L'applicazione verrà chiusa dopo la rimozione delle impostazioni"
+
+#: controller_gtk.py:111
+msgid "Send and receive MMS on your N900."
+msgstr "Invia e ricevi MMS dal tuo N900."
+
+#: fmms_gui.py:439
+msgid ""
+"To retrieve the MMS your active connection will need to change. Switch "
+"connection?"
+msgstr ""
+"È necessario cambiare la connessione attiva per ricevere l'MMS. Cambiare "
+"connessione?"
+
+#: fmms_viewer.py:92
+msgid "Headers"
+msgstr "Intestazioni"
+
+#: heaboutdialog.py:45
+msgid "About"
+msgstr "Informazioni"
+
+#: heaboutdialog.py:90
+#, python-format
+msgid "About %s"
+msgstr "Informazioni su %s"
+
+#: heaboutdialog.py:106
+msgid "Visit website"
+msgstr "Sito web"
+
+#: heaboutdialog.py:111
+msgid "Report bug"
+msgstr "Bug"
+
+#: heaboutdialog.py:116
+msgid "Donate"
+msgstr "Donazione"
+
+#: controller.py:125
+msgid "Please check your settings."
+msgstr "Controllare le impostazioni."

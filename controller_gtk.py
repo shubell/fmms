@@ -186,7 +186,7 @@ class fMMS_controllerGTK(controller.fMMS_controller):
 		dialog = gtk.Dialog()
 		dialog.set_title(gettext.ldgettext('osso-connectivity-ui', 'conn_fi_phone_network_data_roam'))
 		#dialog.set_transient_for(self.window)
-		label = gtk.Label(_("To retrieve the MMS your active connection you need to connect to the internet, proceed?"))
+		label = gtk.Label("To retrieve the MMS your active connection will use data roaming, proceed?")
 		label.set_line_wrap(True)
 		dialog.vbox.add(label)
 		dialog.add_button(gtk.STOCK_YES, 1)

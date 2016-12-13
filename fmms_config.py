@@ -19,6 +19,8 @@ CONNMODE_UGLYHACK = 1
 CONNMODE_ICDSWITCH = 2
 CONNMODE_FORCESWITCH = 3
 CONNMODE_NULL = 10
+ROAMMODE_PROMPT = 1
+ROAMMODE_IGNORE = 2
 
 class fMMS_config:
 
@@ -61,6 +63,8 @@ class fMMS_config:
 			self.set_version("Unknown")
 		if self.get_connmode() == None:
 			self.set_connmode(CONNMODE_FORCESWITCH)
+		if self.get_roammode() == None:
+			self.set_roammode(ROAMMODE_PROMPT)
 		if self.get_db_path() == None:
 			self.set_db_path("/home/user/.fmms/mms.db")
 		if not self.get_useragent():
@@ -82,6 +86,7 @@ class fMMS_config:
 			self.set_firstlaunch(1)
 			self.set_img_resize_width(240)
 			self.set_connmode(CONNMODE_FORCESWITCH)
+			self.set_roammode(ROAMMODE_PROMPT)
 
 	def get_old_mmsc(self):
 		return self.client.get_string(self._fmmsdir + 'mmsc')
@@ -97,6 +102,12 @@ class fMMS_config:
 		
 	def get_connmode(self):
 		return self.client.get_int(self._fmmsdir + "connmode")
+		
+	def set_roammode(self, val):
+		self.client.set_int(self._fmmsdir + "roammode", int(val))
+		
+	def get_roammode(self):
+		return self.client.get_int(self._fmmsdir + "roammode")
 		
 	def get_last_ui_dir(self):
 		return self.client.get_string(self._fmmsdir + "lastuidir")

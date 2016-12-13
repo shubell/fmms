@@ -1,0 +1,132 @@
+# UI translation for fMMS
+# Copyright (C) 2010 Nick Leppänen Larsson <frals@frals.se>
+# This file is distributed under the same license as the fMMS package.
+# Diego Búrigo Zacarão <diegobz@gmail.com>, 2010.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: fMMS\n"
+"Report-Msgid-Bugs-To: http://bugs.maemo.org/enter_bug.cgi?product=fMMS\n"
+"POT-Creation-Date: 2010-11-08 22:02+0200\n"
+"Last-Translator: Diego Búrigo Zacarão <diegobz@gmail.com>\n"
+"Language-Team: Portuguese (Brazilian) <>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: fmms_sender_ui.py:234
+#, python-format
+# Shown when the user tries to attach a file
+# exceeding 10MB (current limit)
+msgid "Attachment is too large (limit is %s)."
+msgstr "Anexo muito grande (o limite é %s)"
+
+#: fmms_config_dialog.py:52
+# Resize image to: Small
+msgid "Small"
+msgstr "Pequeno"
+
+#: fmms_config_dialog.py:52
+# Resize image to: Medium
+msgid "Medium"
+msgstr "Médio"
+
+#: fmms_config_dialog.py:52
+# Resize image to: Large
+msgid "Large"
+msgstr "Grande"
+
+#: fmms_config_dialog.py:52
+# Shown when not resizing image at all
+msgid "Original"
+msgstr "Original"
+
+#: fmms_config_dialog.py:71
+# Note: Keep this string as short as possible
+# Limit around 8-10 chars
+msgid "Havoc"
+msgstr "Destruir"
+
+#: fmms_config_dialog.py:74
+# Note: Keep this string as short as possible
+# Limit around 8-10 chars
+msgid "Rude"
+msgstr "Grosseiro"
+
+#: fmms_config_dialog.py:77
+# Note: Keep this string as short as possible
+# Limit around 8-10 chars
+msgid "Polite"
+msgstr "Educado"
+
+#: controller_gtk.py:34 controller_gtk.py:88
+# Menu choice to reset fmms settings to null
+msgid "Reset settings"
+msgstr "Redefinir configurações"
+
+#: controller_gtk.py:91
+# Shown when user confirms reseting application settings
+msgid "Are you sure you want to reset all settings?"
+msgstr "Tem certeza que você quer redefinir todas as configurações?"
+
+#: controller_gtk.py:99
+msgid "Application will close after settings are removed"
+msgstr "A aplicação irá fechar após as configrações serem removidas"
+
+#: controller_gtk.py:111
+# Description of the application, should not be much
+# longer than the msgid.
+msgid "Send and receive MMS on your N900."
+msgstr "Enviar e receber MMS no seu N900."
+
+#: fmms_gui.py:439
+# Shown when the active connection is wrong when
+# trying to download an MMS from the main view
+msgid ""
+"To retrieve the MMS your active connection will need to change. Switch "
+"connection?"
+msgstr ""
+"Para recuperar o MMS será necessário alterar sua conexão ativa. Alterar "
+"conexão?"
+
+
+#: fmms_viewer.py:92
+# 'Headers' as in 'Message headers' 
+msgid "Headers"
+msgstr "Cabeçalhos"
+
+#: heaboutdialog.py:45
+# About, in the About dialog
+msgid "About"
+msgstr "Sobre"
+
+#: heaboutdialog.py:90
+#, python-format
+# Example: About fMMS
+msgid "About %s"
+msgstr "Sobre %s"
+
+#: heaboutdialog.py:106
+# Note: This string should NOT be longer than
+# ~14 chars to fit in the button
+msgid "Visit website"
+msgstr "Visite o website"
+
+#: heaboutdialog.py:111
+# Note: This string should NOT be longer than
+# ~14 chars to fit in the button
+msgid "Report bug"
+msgstr "Relatar erros"
+
+#: heaboutdialog.py:116
+# Note: This string should NOT be longer than
+# ~14 chars to fit in the button
+msgid "Donate"
+msgstr "Fazer doação"
+
+#: controller.py:125
+# Catch all (connection) error message
+msgid "Please check your settings."
+msgstr "Por favor verifique suas configurações."

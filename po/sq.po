@@ -1,0 +1,115 @@
+# UI translation for fMMS
+# Copyright (C) 2010 Nick Leppänen Larsson <frals@frals.se>
+# This file is distributed under the same license as the fMMS package.
+# Nick Leppänen Larsson <frals@frals.se>, 2010.
+#
+# Ilir Maksimiljan Gjika <ilir.gjika@gmail.com>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: fMMS\n"
+"Report-Msgid-Bugs-To: http://bugs.maemo.org/enter_bug.cgi?product=fMMS\n"
+"POT-Creation-Date: 2010-05-30 22:38+0200\n"
+"Last-Translator: Nick Leppänen Larsson <frals@frals.se>\n"
+"Language-Team: English <>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: fmms_viewer.py:82
+# 'Headers' as in 'Message headers' 
+msgid "Headers"
+msgstr "Titulli"
+
+#: fmms_gui.py:433
+# Shown when the active connection is wrong when
+# trying to download an MMS from the main view
+msgid ""
+"To retrieve the MMS your active connection will need to change. Switch "
+"connection?"
+msgstr "Për të shkarkuar MMS-në duhet te ndroj lidhjen. Mund ta ndroj "
+"lidhjen?"
+
+#: heaboutdialog.py:42
+# About, in the About dialog
+msgid "About"
+msgstr "Informacione mbi"
+
+#: heaboutdialog.py:86
+#, python-format
+# Example: About fMMS
+msgid "About %s"
+msgstr "Informacione mbi %s"
+
+#: heaboutdialog.py:102
+# Note: This string should NOT be longer than
+# ~14 chars to fit in the button
+msgid "Visit website"
+msgstr "Shiko faqen web"
+
+#: heaboutdialog.py:107
+# Note: This string should NOT be longer than
+# ~14 chars to fit in the button
+msgid "Report bug"
+msgstr "Raporto një bug"
+
+#: heaboutdialog.py:112
+# Note: This string should NOT be longer than
+# ~14 chars to fit in the button
+msgid "Donate"
+msgstr "Bëni një ofertë"
+
+#: fmms_sender_ui.py:206
+#, python-format
+# Shown when the user tries to attach a file
+# exceeding 10MB (current limit)
+msgid "Attachment is too large (limit is %s)."
+msgstr "Objekti i bashkangjitur është tepër i madh (kufiri është %s)."
+
+#: fmms_sender_ui.py:350
+# Catch all (connection) error message
+msgid "Please check your settings."
+msgstr "Të lutem kontrollo rregullimet"
+
+#: controller_gtk.py:83
+# Description of the application, should not be much
+# longer than the msgid.
+msgid "Send and receive MMS on your N900."
+msgstr "Dërgo dhe merr MMS në N900-ën tënde"
+
+#: fmms_config_dialog.py:52
+# Resize image to: Small
+msgid "Small"
+msgstr "E vogël"
+
+#: fmms_config_dialog.py:52
+# Resize image to: Medium
+msgid "Medium"
+msgstr "Mesatare"
+
+#: fmms_config_dialog.py:52
+# Resize image to: Large
+msgid "Large"
+msgstr "E madhe"
+
+#: fmms_config_dialog.py:52
+# Shown when not resizing image at all
+msgid "Original"
+msgstr "Origjinale"
+
+#: fmms_config_dialog.py:71
+# Note: Keep this string as short as possible
+# Limit around 8-10 chars
+msgid "Havoc"
+msgstr "Havoc"
+
+#: fmms_config_dialog.py:74
+# Note: Keep this string as short as possible
+# Limit around 8-10 chars
+msgid "Rude"
+msgstr "Rude"
+
+#: fmms_config_dialog.py:77
+# Note: Keep this string as short as possible
+# Limit around 8-10 chars
+msgid "Polite"
+msgstr "Polite"

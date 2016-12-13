@@ -149,9 +149,9 @@ class MMSDecoder(wsp_pdu.Decoder):
             	break
             if header == MMSEncodingAssignments.fieldNames[0x04][0]:
                 contentTypeFound = True
-            elif header == MMSEncodingAssignments.fieldNames[0x03][0]:
-                contentLocationFound = True
-                break
+            #elif header == MMSEncodingAssignments.fieldNames[0x03][0]:
+                #contentLocationFound = True
+                #break
                 #pass
             else:
             	try:

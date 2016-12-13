@@ -19,6 +19,7 @@ CONNMODE_UGLYHACK = 1
 CONNMODE_ICDSWITCH = 2                                                         
 CONNMODE_FORCESWITCH = 3                                                       
 CONNMODE_NULL = 10
+ROAMMODE_IGNORE = 2
 
 class MasterConnector:
 	""" handles setting up and (might) take down connection(s) """
@@ -39,14 +40,16 @@ class MasterConnector:
 		phoneobj = bus.get_object('com.nokia.phone.net', '/com/nokia/phone/net')
 		phoneif = dbus.Interface(phoneobj, 'Phone.Net')
 		statusarr = phoneif.get_registration_status()[0]
-		if statusarr != 0:
-			log.info("not in home network, not downloading..")
+		if (self.config.get_roammode() == ROAMMODE_IGNORE) and statusarr != 0:
 			if self.cont.ui:
 				if not self.cont.continue_download_roaming():
 					log.info("user declined to download while roaming")
 					raise Exception('User is roaming, not downloading')
-					return	
+					return
+				else:
+					log.info("user accepted to download while roaming")
 			else:
+				log.info("not in home network, not downloading..")
 				self.connector = None
 				raise Exception('User is roaming, not downloading')
 				#return

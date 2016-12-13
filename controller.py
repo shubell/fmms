@@ -288,7 +288,7 @@ class fMMS_controller():
 		message = self.decode_binary_mms(path)
 		os.system("if [ -f /home/user/.fmms/mms/" + trans_id + "/message.bak ]; then diff /home/user/.fmms/mms/" + trans_id + "/message /home/user/.fmms/mms/" + trans_id + "/message.bak; if [ \"$?\" == \"0\" ]; then rm /home/user/.fmms/mms/" + trans_id + "/message.bak; fi; fi")
 		log.info("storing mms...%s", trans_id)
-		mmsid = self.store_mms_message(pushid, message)
+		mmsid = self.store_mms_message(pushid, message, transactionId=trans_id)
 		
 	def get_mms_attachments(self, transactionid, allFiles=False):
 		return self.store.get_mms_attachments(transactionid, allFiles)
