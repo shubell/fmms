@@ -1210,9 +1210,11 @@ class Decoder:
         # Look for the Any-charset value
         byte = byteIter.preview()
         byteIter.resetPreview()
-        if byte == 127:
-            byteIter.next()
-            decodcedCharSet = '*'
+###### XXX comment above says 128; is this a bug?
+#        if byte == 127:
+        if byte == 128:
+             byteIter.next()
+            decodedCharSet = '*'
         else:
             charSetValue = Decoder.decodeIntegerValue(byteIter)
             if charSetValue in WSPEncodingAssignments.wkCharSets:
