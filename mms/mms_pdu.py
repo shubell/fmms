@@ -30,8 +30,8 @@ class MMSEncodingAssignments:
                   0x04 : ('Content-Type','ContentTypeValue'),
                   0x05 : ('Date', 'DateValue'),
                   0x06 : ('Delivery-Report', 'BooleanValue'),
-                  0x07 : ('Delivery-Time', None),
-                  0x08 : ('Expiry', 'ExpiryValue'),
+                  0x07 : ('Delivery-Time', 'DateTimeValue'),
+                  0x08 : ('Expiry', 'DateTimeValue'),
                   0x09 : ('From', 'FromValue'),
                   0x0a : ('Message-Class', 'MessageClassValue'),
                   0x0b : ('Message-ID', 'TextString'),
@@ -48,9 +48,16 @@ class MMSEncodingAssignments:
                   0x16 : ('Subject', 'EncodedStringValue'),
                   0x17 : ('To', 'EncodedStringValue'),
                   0x18 : ('Transaction-Id', 'TextString'),
-                  0x19 : ('Retrieve-Status', 'ShortInteger'), #peterleinchen
-                  0x40 : ('Content-ID', 'TextString')}
-
+                  0x19 : ('Retrieve-Status', 'RetrieveStatusValue'), #peterleinchen had ShortInteger here
+                  0x1a : ('Retrieve-Text', 'EncodedStringValue'),
+                  0x1b : ('Read-Status', 'BooleanValue'),
+                  0x1c : ('Reply-Charging', 'ReplyChargingValue'),
+                  0x1d : ('Reply-Charging-Deadline', 'DateTimeValue'),
+                  0x1e : ('Reply-Charging-ID', 'TextString'),
+                  0x1f : ('Reply-Charging-Size', 'LongInteger'),                 
+		  0x20 : ('Previously-Sent-By', 'IgnoreValueLengthValue'),
+		  0x21 : ('Previously-Sent-Date', 'IgnoreValueLengthValue'),
+		  0x40 : ('Content-ID', 'TextString')}
 
 class MMSDecoder(wsp_pdu.Decoder):
     """ A decoder for MMS messages """
@@ -302,15 +309,15 @@ class MMSDecoder(wsp_pdu.Decoder):
             part.headers = headers
             self._mmsMessage.addDataPart(part)
             # TODO: Make this pretty
-            #extension = 'dump'
+            extension = 'dump'
             if contentType == 'image/jpeg':
                 extension = 'jpg'
-            #if contentType == 'image/gif':
-            #    extension = 'gif'
-            #elif contentType == 'audio/wav':
-            #    extension = 'wav'
-            #elif contentType == 'audio/midi':
-            #    extension = 'mid'
+            if contentType == 'image/gif':
+                extension = 'gif'
+            elif contentType == 'audio/wav':
+                extension = 'wav'
+            elif contentType == 'audio/midi':
+                extension = 'mid'
             elif contentType == 'text/plain':
                 extension = 'txt'
             elif contentType == 'application/smil':
@@ -382,7 +389,7 @@ class MMSDecoder(wsp_pdu.Decoder):
             #extension = 'dump'
             if contentType == 'image/jpeg':
                 extension = 'jpg'
-            if contentType == 'image/gif':
+            elif contentType == 'image/gif':
                 extension = 'gif'
             elif contentType == 'audio/wav':
                 extension = 'wav'
@@ -609,7 +616,7 @@ class MMSDecoder(wsp_pdu.Decoder):
             byteIter.resetPreview()
             msgClass = wsp_pdu.Decoder.decodeTokenText(byteIter)
         return msgClass
-
+Response-status-value
     @staticmethod
     def decodeMessageTypeValue(byteIter):
         """ Defined in [4], section 7.2.14.
@@ -623,7 +630,11 @@ class MMSDecoder(wsp_pdu.Decoder):
                         0x83 : 'm-notifyresp-ind',
                         0x84 : 'm-retrieve-conf',
                         0x85 : 'm-acknowledge-ind',
-                        0x86 : 'm-delivery-ind'}
+                        0x86 : 'm-delivery-ind',
+                        0x87 : 'm-read-rec-ind',
+                        0x88 : 'm-read-orig-ind',
+                        0x89 : 'm-forward-rec-ind',
+                        0x90 : 'm-forward-conf-ind'}
         byte = byteIter.preview()
         if byte in messageTypes:
             byteIter.next()
@@ -689,9 +700,7 @@ class MMSDecoder(wsp_pdu.Decoder):
         
         Used to decode the "Response Status" MMS header.
         
-        @raise wsp_pdu.DecodeError: The sender visibility value could not be
-                                parsed.
-                                C{byteIter} will not be modified in this case.
+        @raise wsp_pdu.DecodeError: The sender visibility value could not be parsed. C{byteIter} will not be modified in this case.
         
         @return: The decoded Response-status-value
         @rtype: str
@@ -704,15 +713,31 @@ class MMSDecoder(wsp_pdu.Decoder):
                                 0x85 : 'Error-message-not-found',
                                 0x86 : 'Error-network-problem',
                                 0x87 : 'Error-content-not-accepted',
-                                0x88 : 'Error-unsupported-message'}
-        byte = byteIter.preview()
+                                0x88 : 'Error-unsupported-message',
+                                0xc0 : 'Error-transient-failure',
+                                0xc1 : 'Error-transient-sending-address-unresolved',
+                                0xc2 : 'Error-transient-message-not-found',
+                                0xc3 : 'Error-transient-network-problem',
+                                0xe0 : 'Error-permanent-failure',
+                                0xe1 : 'Error-permanent-service-denied',
+                                0xe2 : 'Error-permanent-message-format-corrupt',
+                                0xe3 : 'Error-permanent-sending-address-unresolved',
+                                0xe4 : 'Error-permanent-message-not-found',
+                                0xe5 : 'Error-permanent-content-not-accepted',
+                                0xe6 : 'Error-permanent-reply-charging-limitations-not-met',
+                                0xe7 : 'Error-permanent-reply-charging-request-not-accepted',
+                                0xe8 : 'Error-permanent-reply-charging-forwarding-denied',
+                                0xe9 : 'Error-permanent-reply-not-supported'}
+        byte = byteIter.next()
         if byte in responseStatusValues:
-            byteIter.next()
             return responseStatusValues[byte]
-        else:
-            byteIter.next()
-            # Return an unspecified error if the response is not recognized
-            return responseStatusValues[0x81]
+        if byte > 192 and byte < 224:
+            return retrieveStatusValues[0xc0]
+        if byte > 224:
+            return retrieveStatusValues[0xe0]
+        # Return an unspecified error if the response is not recognized
+        return responseStatusValues[0x81]
+        
         
     @staticmethod
     def decodeStatusValue(byteIter):
@@ -720,9 +745,7 @@ class MMSDecoder(wsp_pdu.Decoder):
         
         Used to decode the "Status" MMS header.
         
-        @raise wsp_pdu.DecodeError: The sender visibility value could not be
-                                parsed.
-                                C{byteIter} will not be modified in this case.
+        @raise wsp_pdu.DecodeError: The sender visibility value could not be parsed.  C{byteIter} will not be modified in this case.
         
         @return: The decoded Status-value
         @rtype: str
@@ -732,7 +755,9 @@ class MMSDecoder(wsp_pdu.Decoder):
                         0x81 : 'Retrieved',
                         0x82 : 'Rejected',
                         0x83 : 'Deferred',
-                        0x84 : 'Unrecognised'}
+                        0x84 : 'Unrecognised',
+                        0x85 : 'Indeterminate',
+                        0x86 : 'Forwarded'}
         
         byte = byteIter.preview()
         if byte in statusValues:
@@ -745,10 +770,10 @@ class MMSDecoder(wsp_pdu.Decoder):
     
     
     @staticmethod
-    def decodeExpiryValue(byteIter):
+    def decodeDateTimeValue(byteIter):
         """ Defined in [4], section 7.2.10
         
-        Used to decode the "Expiry" MMS header.
+        Used to decode MMS headers taking a date-value or a delta-seconds-value
         
         From [4], section 7.2.10:
         Expiry-value = Value-length (Absolute-token Date-value | Relative-token Delta-seconds-value)
@@ -770,6 +795,72 @@ class MMSDecoder(wsp_pdu.Decoder):
         else:
             raise wsp_pdu.DecodeError, 'Unrecognized token value: %s' % hex(token)
         return data
+    @staticmethod
+    def decodeRetrieveStatusValue(byteIter):
+        """ Defined in [4+], section 7.2.29
+        
+        Used to decode the "Retrieve-Status" MMS header.
+        
+        @return: The decoded Status-value
+        @rtype: str
+        """
+        
+        retrieveStatusValues = {0x80 : 'Ok',
+                                0xc0 : 'Transient-failure',
+                                0xc1 : 'Transient-message-not-found',
+                                0xc2 : 'Transient-network-problem',
+                                0xe0 : 'Permanent-failure',
+                                0xe1 : 'Permanent-service-denied',
+                                0xe2 : 'Permanent-message-not-found',
+                                0xe3 : 'Permanent-content-unsupported'}
+        
+        byte = byteIter.next()
+        if byte in retrieveStatusValues:
+            return retrieveStatusValues[byte]
+        if byte > 192 and byte < 224:
+            return retrieveStatusValues[0xc0]
+        if byte > 224:
+            return retrieveStatusValues[0xe0]
+        # Return an unrecognised state if it couldn't be decoded
+        return 'Unknown (not ok)'
+    
+        
+    @staticmethod
+    def decodeIgnoreValueLengthValue(byteIter):
+        """ Used to skip a value with a value-length
+        
+        @return: empty string
+        @rtype: string
+        """
+        valueLength = wsp_pdu.Decoder.decodeValueLength(byteIter)
+        while valueLength > 0:
+            byteIter.next()
+        return ''
+     
+    @staticmethod
+    def decodeReplyChargingValue(byteIter):
+        """ Defined in [4+], section 7.2.22
+        
+        Used to decode the "Reply Charging" MMS header.
+        
+            raise wsp_pdu.DecodeError, 'Unrecognized token value: %s' % hex(token)
+        @raise wsp_pdu.DecodeError: The reply charging value could not be parsed.
+                                C{byteIter} will not be modified in this case.
+        
+        @return: The decoded Response-status-value
+        @rtype: str
+        """
+        replyChargingValues = {0x80 : 'Requested',
+                               0x81 : 'Requested-text-only',
+                               0x82 : 'Accepted',
+                               0x83 : 'Accepted-text-only'}
+        byte = byteIter.preview()
+        if byte not in replyChargingValues:
+            byteIter.resetPreview()
+            raise wsp_pdu.DecodeError, 'Error parsing reply charging value for byte: %s' % hex(byte)
+        byteIter.next()
+        return replyChargingValues[byte]
+
         
     
 class MMSEncoder(wsp_pdu.Encoder):
