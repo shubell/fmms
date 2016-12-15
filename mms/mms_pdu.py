@@ -312,7 +312,7 @@ class MMSDecoder(wsp_pdu.Decoder):
             extension = 'dump'
             if contentType == 'image/jpeg':
                 extension = 'jpg'
-            eif contentType == 'image/gif':
+            elif contentType == 'image/gif':
                 extension = 'gif'
             elif contentType == 'audio/wav':
                 extension = 'wav'
