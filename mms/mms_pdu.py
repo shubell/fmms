@@ -616,7 +616,7 @@ class MMSDecoder(wsp_pdu.Decoder):
             byteIter.resetPreview()
             msgClass = wsp_pdu.Decoder.decodeTokenText(byteIter)
         return msgClass
-Response-status-value
+
     @staticmethod
     def decodeMessageTypeValue(byteIter):
         """ Defined in [4], section 7.2.14.
