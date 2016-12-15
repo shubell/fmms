@@ -1214,7 +1214,7 @@ class Decoder:
 #        if byte == 127:
         if byte == 128:
              byteIter.next()
-            decodedCharSet = '*'
+       	     decodedCharSet = '*'
         else:
             charSetValue = Decoder.decodeIntegerValue(byteIter)
             if charSetValue in WSPEncodingAssignments.wkCharSets:
